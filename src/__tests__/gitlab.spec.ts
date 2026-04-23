@@ -15,6 +15,9 @@ const expectInteractiveCardSent = async (event: Record<string, any>) => {
   expect(mockRobot.send).toBeCalledTimes(1);
   const [message] = vi.mocked(mockRobot.send).mock.calls[0];
   expect(message.msg_type).toBe("interactive");
+  if (message.msg_type !== "interactive") {
+    throw new Error(`Expected interactive message, got ${message.msg_type}`);
+  }
   expect(message.card.header.title.content.length).toBeGreaterThan(0);
   expect(message.card.elements.length).toBeGreaterThan(0);
 };

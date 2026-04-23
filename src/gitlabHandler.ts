@@ -168,10 +168,11 @@ const titleWithAction = (
   event: GitlabWebhookPayload,
   label: string,
   action?: unknown,
-) => compactLines([projectName(event), label, stringValue(action)]).replace(
-  /\n/g,
-  " ",
-);
+) =>
+  compactLines([projectName(event), label, stringValue(action)]).replace(
+    /\n/g,
+    " ",
+  );
 
 const normalizeGitlabEventKind = (kind: unknown) =>
   stringValue(kind)?.trim().toLowerCase().replace(/\s+/g, "_");

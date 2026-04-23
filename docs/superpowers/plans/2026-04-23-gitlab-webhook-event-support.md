@@ -452,8 +452,11 @@ const titleWithAction = (
   event: GitlabWebhookPayload,
   label: string,
   action?: unknown,
-) => compactLines([projectName(event), label, stringValue(action)])
-  .replace(/\n/g, " ");
+) =>
+  compactLines([projectName(event), label, stringValue(action)]).replace(
+    /\n/g,
+    " ",
+  );
 ```
 
 - [ ] **Step 3: Add event kind normalization**
@@ -604,7 +607,11 @@ const formatters: Record<string, GitlabEventFormatter> = {
   release: (event) => {
     const attrs = objectAttributes(event);
     return {
-      title: titleWithAction(event, "release", firstString(event.action, attrs.action)),
+      title: titleWithAction(
+        event,
+        "release",
+        firstString(event.action, attrs.action),
+      ),
       content: compactLines([
         line("Release", firstString(event.name, attrs.name, attrs.tag)),
         line("Action", firstString(event.action, attrs.action)),
@@ -617,7 +624,11 @@ const formatters: Record<string, GitlabEventFormatter> = {
   emoji: (event) => {
     const attrs = objectAttributes(event);
     return {
-      title: titleWithAction(event, "emoji", firstString(attrs.action, event.event_type)),
+      title: titleWithAction(
+        event,
+        "emoji",
+        firstString(attrs.action, event.event_type),
+      ),
       content: compactLines([
         line("Emoji", attrs.name),
         line("User", userName(event)),
@@ -666,7 +677,10 @@ const formatters: Record<string, GitlabEventFormatter> = {
         line("State", attrs.state),
       ]),
       url: firstString(attrs.url, projectUrl(event)),
-      template: attrs.severity === "critical" || attrs.severity === "high" ? "red" : "orange",
+      template:
+        attrs.severity === "critical" || attrs.severity === "high"
+          ? "red"
+          : "orange",
     };
   },
 
